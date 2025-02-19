@@ -1,0 +1,151 @@
+<html><head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Centering the card */
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* background-color: red; */
+        }
+
+        .card {
+           background-color: white;
+            /* border: 1px solid #dd0404; */
+            border-radius: 5px;
+            padding: 20px;
+            max-width: 400px;
+            box-shadow: rgba(17, 17, 26, 0.1) 0px 8px 24px, rgba(17, 17, 26, 0.1) 0px 16px 56px, rgba(17, 17, 26, 0.1) 0px 24px 80px;
+            font-family: 'Arial', sans-serif; /* Change the font family */
+            border-radius: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        table {
+            width: 100%;
+        }
+
+        img {
+            width: 75px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px; /* Set the default font size */
+        }
+
+        h3 {
+            text-align: center;
+            font-size: 16px; /* Set the default font size */
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 20px; /* Adjust font size for smaller screens */
+            }
+
+            h3 {
+                font-size: 14px; /* Adjust font size for smaller screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <table>
+                <tbody>
+                    <tr>
+                        <td style="text-align: center"><img src="https://codingraja.tech/wp-content/uploads/2023/08/Picsart_23-04-27_08-02-52-263-1-150x150.png"></td>
+                    </tr>
+                    <tr>
+                        <td><h1>This Certificate Is Verified</h1></td>
+                    </tr>
+                    <tr>
+                        <td><h3>The candidate has successfully completed a virtual internship with Coding Raja Technologies</h3></td>
+                    </tr>
+                    <tr>
+                        <td><b>Name:</b></td>
+                    </tr>
+                    <tr>
+                        <td> <span id="demo" class="bd">Prashant Yadav </span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Internship:</b></td>
+                    </tr>
+                    <tr>
+                        <td> <span id="intertype" class="bd">Webdevelopment Internship</span></td>
+                    </tr>
+                    <tr>
+                        <td><b>Certificate ID:</b></td>
+                    </tr>
+                    <tr>
+                        <td> <span id="date" class="bd">MAY/PH5/2/27/oWOhC</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script>
+        function decrypt(text, key) {
+            let decryptedText = "";
+            let words = text.split(" ");
+            for (let i = 0; i < words.length; i++) {
+                let decryptedWord = "";
+                let word = words[i];
+                for (let j = 0; j < word.length; j++) {
+                    let char = word[j];
+                    if (char.match(/[a-zA-Z]/)) {
+                        let asciiVal = char.charCodeAt(0);
+                        let decryptedAscii;
+                        
+                        if (char.match(/[A-Z]/)) {
+                            decryptedAscii = ((asciiVal - 65 - key + 26) % 26) + 65;
+                        } else if (char.match(/[a-z]/)) {
+                            decryptedAscii = ((asciiVal - 97 - key + 26) % 26) + 97;
+                        }
+                        
+                        let decryptedChar = String.fromCharCode(decryptedAscii);
+                        decryptedWord += decryptedChar;
+                    } else if (char.match(/\d/)) {
+                        let numVal = parseInt(char);
+                        let decryptedNum = (numVal - key + 10) % 10;
+                        let decryptedChar = decryptedNum.toString();
+                        decryptedWord += decryptedChar;
+                    } else {
+                        decryptedWord += char;
+                    }
+                }
+                decryptedText += decryptedWord + " ";
+            }
+            return decryptedText.trim();
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const myParam = urlParams.get('details');
+        let key = 3;
+        let decryptedText = decrypt(myParam, key);
+        console.log("Decrypted text:", decryptedText);
+
+        const [name, interntype, date] = decryptedText.split("_");
+
+        document.getElementById("demo").innerHTML = name;
+        document.getElementById("intertype").innerHTML = interntype;
+        document.getElementById("date").innerHTML = date;
+    </script>
+    <script>
+        // Add an event listener to the print button
+        document.getElementById("printButton").addEventListener("click", function() {
+            const element = document.getElementById('printButton');
+            element.style.display = 'none';
+            window.print();
+        });
+    </script>
+
+</body></html>
